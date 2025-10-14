@@ -1,0 +1,99 @@
+CREATE SCHEMA `tch_1` ;
+
+-- Teachers
+CREATE TABLE `tch_1`.`teachers` (
+    `id` CHAR(36) NOT NULL PRIMARY KEY,
+    `code` TEXT,
+    `firstName` TEXT,
+    `lastName` TEXT,
+    `created` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE = InnoDB;
+
+-- Subjects
+CREATE TABLE `tch_1`.`subjects` (
+    `id` CHAR(36) NOT NULL PRIMARY KEY,
+    `code` TEXT,
+    `name` TEXT,
+    `created` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE = InnoDB;
+
+-- Rooms
+CREATE TABLE `tch_1`.`rooms` (
+    `id` CHAR(36) NOT NULL PRIMARY KEY,
+    `code` TEXT,
+    `name` TEXT,
+    `created` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE = InnoDB;
+
+-- Branches
+CREATE TABLE `tch_1`.`branches` (
+    `id` CHAR(36) NOT NULL PRIMARY KEY,
+    `code` TEXT,
+    `name` TEXT,
+    `created` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE = InnoDB;
+
+-- Standards
+CREATE TABLE `tch_1`.`standards` (
+    `id` CHAR(36) NOT NULL PRIMARY KEY,
+    `code` TEXT,
+    `name` TEXT,
+    `created` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE = InnoDB;
+
+-- Courses
+CREATE TABLE `tch_1`.`courses` (
+    `id` CHAR(36) NOT NULL PRIMARY KEY,
+    `code` TEXT,
+    `name` TEXT,
+    `created` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE = InnoDB;
+
+-- Batches
+CREATE TABLE `tch_1`.`batches` (
+    `id` CHAR(36) NOT NULL PRIMARY KEY,
+    `code` TEXT,
+    `name` TEXT,
+    `created` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE = InnoDB;
+
+-- Lecture Schedules 
+CREATE TABLE `tch_1`.`lecture_schedules` (
+  `id` CHAR(36) NOT NULL PRIMARY KEY,
+  `date` TEXT,
+  `day` TEXT,
+  `batch` CHAR(36) NOT NULL,
+  `standard` CHAR(36) NOT NULL,
+  `branch` CHAR(36) NOT NULL,
+  `course` CHAR(36) NOT NULL,
+  `time_in` TEXT,
+  `time_out` TEXT,
+  `teacher` CHAR(36) NOT NULL,
+  `subject` CHAR(36) NOT NULL,
+  `room` CHAR(36) NOT NULL,
+  `topic` TEXT,
+  `created` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  `updated` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, 
+
+  FOREIGN KEY (`batch`) REFERENCES `tch_1`.`batches`(`id`)
+    ON UPDATE CASCADE ON DELETE CASCADE,
+  FOREIGN KEY (`standard`) REFERENCES `tch_1`.`standards`(`id`)
+    ON UPDATE CASCADE ON DELETE CASCADE,
+  FOREIGN KEY (`branch`) REFERENCES `tch_1`.`branches`(`id`)
+    ON UPDATE CASCADE ON DELETE CASCADE,
+  FOREIGN KEY (`course`) REFERENCES `tch_1`.`courses`(`id`)
+    ON UPDATE CASCADE ON DELETE CASCADE,
+  FOREIGN KEY (`teacher`) REFERENCES `tch_1`.`teachers`(`id`)
+    ON UPDATE CASCADE ON DELETE CASCADE,
+  FOREIGN KEY (`subject`) REFERENCES `tch_1`.`subjects`(`id`)
+    ON UPDATE CASCADE ON DELETE CASCADE,
+  FOREIGN KEY (`room`) REFERENCES `tch_1`.`rooms`(`id`)
+    ON UPDATE CASCADE ON DELETE CASCADE
+) ENGINE = InnoDB;
